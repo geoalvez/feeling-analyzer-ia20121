@@ -28,7 +28,7 @@ public class ClassifierUtils {
 	private static final String AGRADECIMENTO = "AGRADECIMENTO=";
 	private static final String PRAZER = "PRAZER=";
 	private static final String PERDA = "PERDA=";
-	private static final String EURORIA = "EURORIA=";
+	private static final String EUFORIA = "EUFORIA=";
 	private static final String SAD_WORDS = "SAD_WORDS=";
 	private static final String BAD_WORDS = "BAD_WORDS=";
 	private static final String GOOD_EMOTICONS = "GOOD_EMOTICONS=";
@@ -71,8 +71,8 @@ public class ClassifierUtils {
 					PERDA_LIST = Arrays.asList(str.split(REGEX_SPIT_ARQ_CONF));
 					
 	 			}				
-				else if (str.startsWith(EURORIA)){
-					str = str.replace(EURORIA, EMPTY_WORD);
+				else if (str.startsWith(EUFORIA)){
+					str = str.replace(EUFORIA, EMPTY_WORD);
 					
 					EUFORIA_LIST = Arrays.asList(str.split(REGEX_SPIT_ARQ_CONF));
 					
@@ -87,8 +87,7 @@ public class ClassifierUtils {
 				else if (str.startsWith(BAD_WORDS)){
 					str = str.replace(BAD_WORDS, EMPTY_WORD);
 					
-					List<String> lista = Arrays.asList(str.split(REGEX_SPIT_ARQ_CONF));
-					BAD_WORDS_LIST = (ArrayList<String>) lista;
+					BAD_WORDS_LIST = Arrays.asList(str.split(REGEX_SPIT_ARQ_CONF));
 	 			}				
 				else if (str.startsWith(GOOD_EMOTICONS)){
 					str = str.replace(GOOD_EMOTICONS, EMPTY_WORD);
@@ -212,6 +211,13 @@ public class ClassifierUtils {
 		for (int i = 0; i < listaPalavras.size(); i++){
 			String palavra = listaPalavras.get(i);
 			if (EUFORIA_LIST.contains(palavra)){
+				count++;
+			}
+		}
+		
+		for (int i = 0; i < GOOD_EMOTICONS_LIST.size();i++){
+			String emoticon = GOOD_EMOTICONS_LIST.get(i);
+			if (frase.indexOf(emoticon) > 0){
 				count++;
 			}
 		}

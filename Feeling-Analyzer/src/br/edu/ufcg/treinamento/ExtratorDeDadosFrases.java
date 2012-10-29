@@ -87,7 +87,7 @@ public class ExtratorDeDadosFrases {
 	}	
 
 	private static String realizaTratamentoFrase(String str){
-		str = trataEmoticons(str);
+		//str = trataEmoticons(str);
 		str = unAccent(str);
 		str = removeConsecutivelyChars(str);
 		str = cleanText(str);
@@ -102,49 +102,48 @@ public class ExtratorDeDadosFrases {
 		str = str.toLowerCase();
 		return str;
 	}	
-	public static void obtemDadosFrases(String fileIn, String fileConf, String tipoDaFrase){
-		
-
-			ClassifierUtils.inicializaPalavrasConf(fileConf);
+	
+	public static FraseDados obtemDadosFrases(String str,  String tipoDaFrase){
+					
+			FraseDados fraseDados = new FraseDados();
+					
+			str = realizaTratamentoFrase(str);
+			fraseDados.setNumPalavrasAgradecimento(ClassifierUtils.contaNumAgradecimento(str));
+			fraseDados.setNumPalavrasPrazer(ClassifierUtils.contaNumPrazer(str));
+			fraseDados.setNumPalavrasPerda(ClassifierUtils.contaNumPerda(str));
+			fraseDados.setNumPalavrasEuforia(ClassifierUtils.contaNumEuforia(str));
+			fraseDados.setNumPalavrasSadWords(ClassifierUtils.contaNumSadWord(str));
+			fraseDados.setNumPalavrasBadWords(ClassifierUtils.contaNumBadWord(str));
+			fraseDados.setNumPalavrasArrependimento(ClassifierUtils.contaNumArrependimento(str));
+			fraseDados.setNumPalavrasDor(ClassifierUtils.contaNumDor(str));
+			fraseDados.setNumPalavrasNegativas(ClassifierUtils.contaNumNegativeWords(str));
+			fraseDados.setNumPalavrasAfirmativas(ClassifierUtils.contaNumAfirmativeWords(str));
+			fraseDados.setTipoDaFrase(tipoDaFrase);
 			
-			
-			BufferedReader in;
-			try {
-				in = new BufferedReader(new FileReader(fileIn));
-				String str;
-				
-				while (in.ready()) {
-					
-					FraseDados fraseDados = new FraseDados();
-					
-					str = in.readLine();
-					str = realizaTratamentoFrase(str);
-					fraseDados.setNumPalavrasAgradecimento(ClassifierUtils.contaNumAgradecimento(str));
-					fraseDados.setNumPalavrasPrazer(ClassifierUtils.contaNumPrazer(str));
-					fraseDados.setNumPalavrasPerda(ClassifierUtils.contaNumPerda(str));
-					fraseDados.setNumPalavrasEuforia(ClassifierUtils.contaNumEuforia(str));
-					fraseDados.setNumPalavrasSadWords(ClassifierUtils.contaNumSadWord(str));
-					fraseDados.setNumPalavrasBadWords(ClassifierUtils.contaNumBadWord(str));
-					fraseDados.setNumPalavrasArrependimento(ClassifierUtils.contaNumArrependimento(str));
-					fraseDados.setNumPalavrasDor(ClassifierUtils.contaNumDor(str));
-					fraseDados.setNumPalavrasNegativas(ClassifierUtils.contaNumNegativeWords(str));
-					fraseDados.setNumPalavrasAfirmativas(ClassifierUtils.contaNumAfirmativeWords(str));
-					fraseDados.setTipoDaFrase(tipoDaFrase);
-					
-					listaFraseDados.add(fraseDados);
+			return fraseDados;
 					
 					
-				}
-				in.close();
-				
-				
-				
-			} catch (FileNotFoundException e) {
-				System.out.println("Arquivo ["+fileIn+"] não foi encontrado.");
-			} catch (Exception e) {
-				System.out.println("Falha ao tentar ler o arquivo informado ["+fileIn+"].");
-			}
 	}		
 
+	public static FraseDados obtemDadosFrases(String str){
+		
+		FraseDados fraseDados = new FraseDados();
+				
+		str = realizaTratamentoFrase(str);
+		fraseDados.setNumPalavrasAgradecimento(ClassifierUtils.contaNumAgradecimento(str));
+		fraseDados.setNumPalavrasPrazer(ClassifierUtils.contaNumPrazer(str));
+		fraseDados.setNumPalavrasPerda(ClassifierUtils.contaNumPerda(str));
+		fraseDados.setNumPalavrasEuforia(ClassifierUtils.contaNumEuforia(str));
+		fraseDados.setNumPalavrasSadWords(ClassifierUtils.contaNumSadWord(str));
+		fraseDados.setNumPalavrasBadWords(ClassifierUtils.contaNumBadWord(str));
+		fraseDados.setNumPalavrasArrependimento(ClassifierUtils.contaNumArrependimento(str));
+		fraseDados.setNumPalavrasDor(ClassifierUtils.contaNumDor(str));
+		fraseDados.setNumPalavrasNegativas(ClassifierUtils.contaNumNegativeWords(str));
+		fraseDados.setNumPalavrasAfirmativas(ClassifierUtils.contaNumAfirmativeWords(str));
+		
+		return fraseDados;
+				
+				
+}	
 
 }
