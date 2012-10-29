@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.SerializationHelper;
@@ -42,9 +40,8 @@ public class CommandLine {
 		}
 
 		System.out
-				.println("==== Bem-vindo ao analisador de sentimentos do Twitter! ===");
-		System.out.println("==== Digite um tweet para se analisado. "
-				+ "Digite uma linha apenas com '.' para sair.");
+				.println("==== Bem-vindo ao analisador de sentimentos em frases! ===");
+		System.out.println("==== Digite uma frase para se analisada. ");
 
 		while (true) {
 			System.out.print("Frase a ser analisada: ");
@@ -66,9 +63,6 @@ public class CommandLine {
 					+ "' foi classificada como uma frase do tipo " + classe);
 		}
 
-		PrintStream output = new PrintStream(new File("output.txt"));
-		output.append(classificador.toString());
-		output.flush();
-		output.close();
+
 	}
 }
