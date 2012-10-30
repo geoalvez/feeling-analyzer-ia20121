@@ -59,7 +59,7 @@ public class FeelingAnalyzer extends JFrame {
 	}
 
 	public static void main(String[] args) throws Exception {
-		run(new FeelingAnalyzer(), 640, 500);
+		run(new FeelingAnalyzer(), 640, 170);
 
 		
 		String model = Constants.MODELS_DIR + Constants.FILE_SEPARATOR
@@ -103,13 +103,13 @@ public class FeelingAnalyzer extends JFrame {
 		classe = classe.toUpperCase();
 		if (classe.equals("FELIZ")) {
 			output.setForeground(Color.yellow);
-			output.setText("Feliz =)");
+			output.setText("FELIZ =)");
 		} else if (classe.equals("TRISTE")){
 			output.setForeground(Color.blue);
-			output.setText("Triste =(");
+			output.setText("TRISTE =(");
 		} else if (classe.equals("DESCONHECIDO")){
 			output.setForeground(Color.black);
-			output.setText("Desconhecido =|");
+			output.setText("DESCONHECIDO =|");
 		}
 	}	
 	
