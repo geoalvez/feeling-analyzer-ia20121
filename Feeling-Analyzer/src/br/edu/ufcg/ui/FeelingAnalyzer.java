@@ -59,7 +59,7 @@ public class FeelingAnalyzer extends JFrame {
 	}
 
 	public static void main(String[] args) throws Exception {
-		run(new FeelingAnalyzer(), 640, 170);
+		run(new FeelingAnalyzer(), 640, 500);
 
 		
 		String model = Constants.MODELS_DIR + Constants.FILE_SEPARATOR
