@@ -27,19 +27,12 @@ public class FeelingAnalyzer extends JFrame {
 	private static JButton b1 = new JButton("Analisar Sentimento");
 	private static JTextField input = new JTextField(30);
 	private static JTextArea output = new JTextArea(1, 10);
+	
+	private static FraseClassifier classificador;
 		
 	private ActionListener bl = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			//TODO analise
-			analisa();					
-			Random rn = new Random();
-			if (rn.nextBoolean()) {
-				output.setForeground(Color.green);
-				output.setText("Feliz =)");
-			} else {
-				output.setForeground(Color.red);
-				output.setText("Triste =(");
-			}
+		public void actionPerformed(ActionEvent e) {			
+			analisa();
 		}
 	};
 
@@ -68,7 +61,6 @@ public class FeelingAnalyzer extends JFrame {
 	public static void main(String[] args) throws Exception {
 		run(new FeelingAnalyzer(), 640, 170);
 
-		FraseClassifier classificador;
 		
 		String model = Constants.MODELS_DIR + Constants.FILE_SEPARATOR
 				+ Constants.MODELO_MULTILAYER_PERCEPTRON;
@@ -81,9 +73,9 @@ public class FeelingAnalyzer extends JFrame {
 		}
 				
 		try {
-			txt.setText("Aguarde... carregando classificador       ");
+			txt.setText("Aguarde... Carregando classificador       ");
 			classificador.load();
-			txt.setText("Aguarde... carregamento concluido         ");
+			txt.setText("           Carregamento concluido!        ");
 			
 		} catch (AnaliseException e1) {
 			txt.setText("Erro durante o treinamento                ");
@@ -91,7 +83,7 @@ public class FeelingAnalyzer extends JFrame {
 			TimeUnit.SECONDS.sleep(1); 
 			//System.exit(1);
 		}
-		TimeUnit.SECONDS.sleep(1); 
+		TimeUnit.SECONDS.sleep(2); 
 		txt.setText("Por favor digite uma frase no local abaixo");
 		input.setEnabled(true);
 		b1.setEnabled(true);
@@ -99,7 +91,26 @@ public class FeelingAnalyzer extends JFrame {
 	
 	public void analisa(){
 		String linha = input.getText();
-		System.out.println(linha);		
-	}
+		String classe = "desconhecido";
+		try {
+			String confFile = Constants.RESOURCE_DIR + Constants.FILE_SEPARATOR + Constants.CONF_FILE;
+			ClassifierUtils.inicializaPalavrasConf(confFile);
+			FraseDados fraseDados = ExtratorDeDadosFrases.obtemDadosFrases(linha);
+			classe = classificador.classify(fraseDados);
+		} catch (AnaliseException e) {
+			System.err.println(e.getMessage());
+		}
+		classe = classe.toUpperCase();
+		if (classe.equals("FELIZ")) {
+			output.setForeground(Color.yellow);
+			output.setText("Feliz =)");
+		} else if (classe.equals("TRISTE")){
+			output.setForeground(Color.blue);
+			output.setText("Triste =(");
+		} else if (classe.equals("DESCONHECIDO")){
+			output.setForeground(Color.black);
+			output.setText("Desconhecido =|");
+		}
+	}	
 	
 } 
