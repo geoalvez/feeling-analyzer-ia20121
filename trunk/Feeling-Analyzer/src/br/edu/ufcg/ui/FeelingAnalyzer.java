@@ -5,18 +5,14 @@ import javax.swing.*;
 import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.SerializationHelper;
 import br.edu.ufcg.analisador.FraseClassifier;
-import br.edu.ufcg.exception.AnaliseException;
+import br.edu.ufcg.exception.AnalyzeException;
 import br.edu.ufcg.treinamento.ExtratorDeDadosFrases;
 import br.edu.ufcg.treinamento.classifier.ClassifierUtils;
 import br.edu.ufcg.treinamento.entidade.FraseDados;
-import br.edu.ufcg.util.Constants;
+import br.edu.ufcg.util.Constantes;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static br.edu.ufcg.ui.SwingConsole.*;
@@ -62,8 +58,8 @@ public class FeelingAnalyzer extends JFrame {
 		run(new FeelingAnalyzer(), 640, 170);
 
 		
-		String model = Constants.MODELS_DIR + Constants.FILE_SEPARATOR
-				+ Constants.MODELO_MULTILAYER_PERCEPTRON;
+		String model = Constantes.MODELS_DIR + Constantes.FILE_SEPARATOR
+				+ Constantes.MODELO_MULTILAYER_PERCEPTRON;
 		
 		try { // tenta ler o modelo salvo em arquivo
 			classificador = (FraseClassifier) SerializationHelper
@@ -77,7 +73,7 @@ public class FeelingAnalyzer extends JFrame {
 			classificador.load();
 			txt.setText("           Carregamento concluido!        ");
 			
-		} catch (AnaliseException e1) {
+		} catch (AnalyzeException e1) {
 			txt.setText("Erro durante o treinamento                ");
 			System.err.println("Erro ao treinar classificador: " + e1.getMessage());
 			TimeUnit.SECONDS.sleep(1); 
@@ -93,11 +89,11 @@ public class FeelingAnalyzer extends JFrame {
 		String linha = input.getText();
 		String classe = "desconhecido";
 		try {
-			String confFile = Constants.RESOURCE_DIR + Constants.FILE_SEPARATOR + Constants.CONF_FILE;
+			String confFile = Constantes.RESOURCE_DIR + Constantes.FILE_SEPARATOR + Constantes.CONF_FILE;
 			ClassifierUtils.inicializaPalavrasConf(confFile);
 			FraseDados fraseDados = ExtratorDeDadosFrases.obtemDadosFrases(linha);
 			classe = classificador.classify(fraseDados);
-		} catch (AnaliseException e) {
+		} catch (AnalyzeException e) {
 			System.err.println(e.getMessage());
 		}
 		classe = classe.toUpperCase();
@@ -107,10 +103,7 @@ public class FeelingAnalyzer extends JFrame {
 		} else if (classe.equals("TRISTE")){
 			output.setForeground(Color.blue);
 			output.setText("TRISTE =(");
-		} else if (classe.equals("DESCONHECIDO")){
-			output.setForeground(Color.black);
-			output.setText("DESCONHECIDO =|");
-		}
+		} 
 	}	
 	
 } 
