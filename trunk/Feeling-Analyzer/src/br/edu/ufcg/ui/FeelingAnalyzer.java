@@ -17,8 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 import static br.edu.ufcg.ui.SwingConsole.*;
 
-@SuppressWarnings("serial")
 public class FeelingAnalyzer extends JFrame {
+
+	private static final long serialVersionUID = 2268237865726253995L;
 	private static JTextArea txt = new JTextArea("Aguarde...                                ");
 	private static JButton b1 = new JButton("Analisar Sentimento");
 	private static JTextField input = new JTextField(30);
